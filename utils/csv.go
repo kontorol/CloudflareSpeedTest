@@ -76,7 +76,7 @@ func ExportCsv(data []CloudflareIPData) {
 	}
 	defer fp.Close()
 	w := csv.NewWriter(fp) //创建一个新的写入文件流
-	_ = w.Write([]string{"IP 地址", "已发送", "已接收", "丢包率", "平均延迟", "下载速度 (MB/s)"})
+	_ = w.Write([]string{"IP Address", "Sent", "Received", "Packet Loss Rate", "Average Delay", "Download Speed (MB/s)"})
 	_ = w.WriteAll(convertToString(data))
 	w.Flush()
 }
@@ -143,7 +143,7 @@ func (s DownloadSpeedSet) Print() {
 		return
 	}
 	if len(s) <= 0 { // IP数组长度(IP数量) 大于 0 时继续
-		fmt.Println("\n[信息] 完整测速结果 IP 数量为 0，跳过输出结果。")
+		fmt.Println("\n[Information] The IP quantity of the complete speed test result is 0, and the output result is skipped.")
 		return
 	}
 	dateString := convertToString(s) // 转为多维数组 [][]String
@@ -159,11 +159,11 @@ func (s DownloadSpeedSet) Print() {
 			break
 		}
 	}
-	fmt.Printf(headFormat, "IP 地址", "已发送", "已接收", "丢包率", "平均延迟", "下载速度 (MB/s)")
+	fmt.Printf(headFormat, "IP Address", "Sent", "Received", "Packet Loss Rate", "Average Delay", "Download Speed (MB/s)")
 	for i := 0; i < PrintNum; i++ {
 		fmt.Printf(dataFormat, dateString[i][0], dateString[i][1], dateString[i][2], dateString[i][3], dateString[i][4], dateString[i][5])
 	}
 	if !noOutput() {
-		fmt.Printf("\n完整测速结果已写入 %v 文件，可使用记事本/表格软件查看。\n", Output)
+		fmt.Printf("\nThe complete speed test results are written to %v file, which can be viewed using Notepad/Table software.\n", Output)
 	}
 }
